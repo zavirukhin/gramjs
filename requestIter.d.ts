@@ -1,5 +1,5 @@
 import type { TelegramClient } from "./client/TelegramClient";
-import { helpers } from "./";
+import { helpers } from "./dist";
 interface BaseRequestIterInterface {
     reverse?: boolean;
     waitTime?: number;
