@@ -16,7 +16,7 @@ import { TLMessage } from "../tl/core";
 import { Api } from "../tl";
 import bigInt from "big-integer";
 import { RequestState } from "./RequestState";
-import { Connection, UpdateConnectionState } from ".";
+import { Connection, UpdateConnectionState } from "./";
 import type { TelegramClient } from "..";
 import { CancellablePromise } from "real-cancellable-promise";
 import { PendingState } from "../extensions/PendingState";

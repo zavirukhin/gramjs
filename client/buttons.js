@@ -4,7 +4,7 @@ exports.buildReplyMarkup = buildReplyMarkup;
 const tl_1 = require("../tl");
 const button_1 = require("../tl/custom/button");
 const messageButton_1 = require("../tl/custom/messageButton");
-const Helpers_1 = require("../gramjs/Helpers");
+const Helpers_1 = require("../Helpers");
 // ButtonMethods
 /** @hidden */
 function buildReplyMarkup(buttons, inlineOnly = false) {

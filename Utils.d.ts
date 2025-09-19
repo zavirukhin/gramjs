@@ -2,7 +2,7 @@ import bigInt from "big-integer";
 import type { ParseInterface } from "./client/messageParse";
 import { CustomFile } from "./client/uploads";
 import type { Entity, EntityLike, MessageIDLike } from "./define";
-import { EntityCache } from "./dist/entityCache";
+import { EntityCache } from "./entityCache";
 import { Api } from "./tl";
 export declare function getFileInfo(fileLocation: Api.Message | Api.MessageMediaDocument | Api.MessageMediaPhoto | Api.TypeInputFileLocation): {
     dcId?: number;

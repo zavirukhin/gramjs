@@ -7,10 +7,10 @@ exports.DEFAULT_DELIMITERS = void 0;
 exports._replaceWithMention = _replaceWithMention;
 exports._parseMessageText = _parseMessageText;
 exports._getResponseMessage = _getResponseMessage;
-const Utils_1 = require("../gramjs/Utils");
+const Utils_1 = require("../Utils");
 const api_1 = require("../tl/api");
-const index_1 = require("../gramjs/index");
-const Helpers_1 = require("../gramjs/Helpers");
+const index_1 = require("../index");
+const Helpers_1 = require("../Helpers");
 const big_integer_1 = __importDefault(require("big-integer"));
 exports.DEFAULT_DELIMITERS = {
     "**": api_1.Api.MessageEntityBold,

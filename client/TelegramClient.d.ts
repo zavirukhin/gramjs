@@ -7,7 +7,7 @@ import * as uploadMethods from "./uploads";
 import * as chatMethods from "./chats";
 import * as dialogMethods from "./dialogs";
 import * as twoFA from "./2fa";
-import type { ButtonLike, Entity, EntityLike, MessageIDLike } from "../gramjs/define";
+import type { ButtonLike, Entity, EntityLike, MessageIDLike } from "../define";
 import { Api } from "../tl";
 import type { EventBuilder } from "../events/common";
 import { MTProtoSender } from "../network";
@@ -18,7 +18,7 @@ import { Album, AlbumEvent } from "../events/Album";
 import { CallbackQuery, CallbackQueryEvent } from "../events/CallbackQuery";
 import { EditedMessage, EditedMessageEvent } from "../events/EditedMessage";
 import { DeletedMessage, DeletedMessageEvent } from "../events/DeletedMessage";
-import { inspect } from "../gramjs/inspect";
+import { inspect } from "../inspect";
 /**
  * The TelegramClient uses several methods in different files to provide all the common functionality in a nice interface.</br>
  * **In short, to create a client you must do:**
@@ -33,7 +33,9 @@ import { inspect } from "../gramjs/inspect";
  */
 export declare class TelegramClient extends TelegramBaseClient {
     /** @hidden */
-    [inspect.custom]: () => any;
+    [inspect.custom]: () => {
+        [key: string]: any;
+    };
     /**
      * @param session - a session to be used to save the connection and auth key to. This can be a custom session that inherits MemorySession.
      * @param apiId - The API ID you obtained from https://my.telegram.org.
@@ -464,7 +466,7 @@ export declare class TelegramClient extends TelegramBaseClient {
      * const message_1337 = messages[0];
      * ```
      */
-    getMessages(entity: EntityLike | undefined, getMessagesParams?: Partial<messageMethods.IterMessagesParams>): Promise<TotalList<Api.Message>>;
+    getMessages(entity: EntityLike | undefined, getMessagesParams?: Partial<messageMethods.IterMessagesParams>): Promise<import("../Helpers").TotalList<Api.Message>>;
     /**
      * Sends a message to the specified user, chat or channel.<br/>
      * The default parse mode is the same as the official applications (a custom flavour of markdown). **bold**, `code` or __italic__ are available.<br/>
@@ -506,7 +508,7 @@ export declare class TelegramClient extends TelegramBaseClient {
      *
      * ```
      */
-    sendMessage(entity: EntityLike, sendMessageParams?: messageMethods.SendMessageParams): Promise<any>;
+    sendMessage(entity: EntityLike, sendMessageParams?: messageMethods.SendMessageParams): Promise<Api.Message>;
     /**
      * Forwards the given messages to the specified entity.<br/>
      *<br/>
@@ -587,7 +589,7 @@ export declare class TelegramClient extends TelegramBaseClient {
      */
     deleteMessages(entity: EntityLike | undefined, messageIds: MessageIDLike[], { revoke }: {
         revoke?: boolean | undefined;
-    }): Promise<any>;
+    }): Promise<Api.messages.AffectedMessages[]>;
     /**
      * Pins a message in a chat.
      *
@@ -694,7 +696,7 @@ export declare class TelegramClient extends TelegramBaseClient {
      * archived = await client.get_dialogs({archived:true})
      * ```
      */
-    getDialogs(params?: dialogMethods.IterDialogsParams): Promise<TotalList<import("../tl/custom/dialog").Dialog>>;
+    getDialogs(params?: dialogMethods.IterDialogsParams): Promise<import("../Helpers").TotalList<import("../tl/custom/dialog").Dialog>>;
     /**
      * Iterates over the participants belonging to a specified chat , channel or supergroup.<br/>
      * <br/>
@@ -734,7 +736,7 @@ export declare class TelegramClient extends TelegramBaseClient {
      * @param params - {@link IterParticipantsParams}.
      * @return
      */
-    getParticipants(entity: EntityLike, params?: chatMethods.IterParticipantsParams): Promise<TotalList<Api.User>>;
+    getParticipants(entity: EntityLike, params?: chatMethods.IterParticipantsParams): Promise<import("../Helpers").TotalList<Api.User>>;
     /**
      * Kicks a user from a chat.
      *
@@ -810,7 +812,7 @@ export declare class TelegramClient extends TelegramBaseClient {
      * Lists all registered event handlers.
      * @return pair of [eventBuilder,CallableFunction]
      */
-    listEventHandlers(): any;
+    listEventHandlers(): [EventBuilder, CallableFunction][];
     /**
      * Uploads a file to Telegram's servers, without sending it.
      * @remarks generally it's better to use {@link sendFile} instead.
@@ -917,7 +919,7 @@ export declare class TelegramClient extends TelegramBaseClient {
      * }
      * ```
      */
-    isBot(): Promise<any>;
+    isBot(): Promise<boolean | undefined>;
     /**
      * Returns true if the user is authorized (logged in).
      * @example
@@ -1006,7 +1008,7 @@ export declare class TelegramClient extends TelegramBaseClient {
      * console.log(await client.getPeerId("me"));
      * ```
      */
-    getPeerId(peer: EntityLike, addMark?: boolean): Promise<any>;
+    getPeerId(peer: EntityLike, addMark?: boolean): Promise<string>;
     /** @hidden */
     _getInputDialog(peer: any): Promise<any>;
     /** @hidden */

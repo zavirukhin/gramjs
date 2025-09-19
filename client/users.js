@@ -16,9 +16,9 @@ exports._getInputDialog = _getInputDialog;
 exports._getInputNotify = _getInputNotify;
 exports._selfId = _selfId;
 const tl_1 = require("../tl");
-const Utils_1 = require("../gramjs/Utils");
-const Helpers_1 = require("../gramjs/Helpers");
-const gramjs_1 = require("../gramjs");
+const Utils_1 = require("../Utils");
+const Helpers_1 = require("../Helpers");
+const __1 = require("../");
 const big_integer_1 = __importDefault(require("big-integer"));
 const Logger_1 = require("../extensions/Logger");
 const RequestState_1 = require("../network/RequestState");
@@ -43,7 +43,7 @@ async function invoke(client, request, dcId, otherSender) {
         throw new Error("Cannot send requests while disconnected. Please reconnect.");
     }
     await client._connectedDeferred.promise;
-    await request.resolve(client, gramjs_1.utils);
+    await request.resolve(client, __1.utils);
     client._lastRequest = new Date().getTime();
     const state = new RequestState_1.RequestState(request);
     let attempt = 0;
@@ -57,14 +57,14 @@ async function invoke(client, request, dcId, otherSender) {
             return result;
         }
         catch (e) {
-            if (e instanceof gramjs_1.errors.ServerError ||
+            if (e instanceof __1.errors.ServerError ||
                 e.errorMessage === "RPC_CALL_FAIL" ||
                 e.errorMessage === "RPC_MCGET_FAIL") {
                 client._log.warn(`Telegram is having internal issues ${e.constructor.name}`);
                 await (0, Helpers_1.sleep)(2000);
             }
-            else if (e instanceof gramjs_1.errors.FloodWaitError ||
-                e instanceof gramjs_1.errors.FloodTestPhoneWaitError) {
+            else if (e instanceof __1.errors.FloodWaitError ||
+                e instanceof __1.errors.FloodTestPhoneWaitError) {
                 if (e.seconds <= client.floodSleepThreshold) {
                     client._log.info(`Sleeping for ${e.seconds}s on flood wait (Caused by ${request.className})`);
                     await (0, Helpers_1.sleep)(e.seconds * 1000);
@@ -74,12 +74,12 @@ async function invoke(client, request, dcId, otherSender) {
                     throw e;
                 }
             }
-            else if (e instanceof gramjs_1.errors.PhoneMigrateError ||
-                e instanceof gramjs_1.errors.NetworkMigrateError ||
-                e instanceof gramjs_1.errors.UserMigrateError) {
+            else if (e instanceof __1.errors.PhoneMigrateError ||
+                e instanceof __1.errors.NetworkMigrateError ||
+                e instanceof __1.errors.UserMigrateError) {
                 client._log.info(`Phone migrated to ${e.newDc}`);
-                const shouldRaise = e instanceof gramjs_1.errors.PhoneMigrateError ||
-                    e instanceof gramjs_1.errors.NetworkMigrateError;
+                const shouldRaise = e instanceof __1.errors.PhoneMigrateError ||
+                    e instanceof __1.errors.NetworkMigrateError;
                 if (shouldRaise && (await client.isUserAuthorized())) {
                     state.finished.resolve();
                     throw e;
@@ -90,7 +90,7 @@ async function invoke(client, request, dcId, otherSender) {
                         ? client._sender
                         : await client.getSender(dcId);
             }
-            else if (e instanceof gramjs_1.errors.MsgWaitError) {
+            else if (e instanceof __1.errors.MsgWaitError) {
                 // We need to resend this after the old one was confirmed.
                 await state.isReady();
                 state.after = undefined;
@@ -117,7 +117,7 @@ async function getMe(client, inputPeer) {
     const me = (await client.invoke(new tl_1.Api.users.GetUsers({ id: [new tl_1.Api.InputUserSelf()] })))[0];
     client._bot = me.bot;
     if (!client._selfInputPeer) {
-        client._selfInputPeer = gramjs_1.utils.getInputPeer(me, false);
+        client._selfInputPeer = __1.utils.getInputPeer(me, false);
     }
     return inputPeer
         ? client._selfInputPeer
@@ -227,7 +227,7 @@ async function getEntity(client, entity) {
 async function getInputEntity(client, peer) {
     // Short-circuit if the input parameter directly maps to an InputPeer
     try {
-        return gramjs_1.utils.getInputPeer(peer);
+        return __1.utils.getInputPeer(peer);
         // eslint-disable-next-line no-empty
     }
     catch (e) { }
@@ -254,7 +254,7 @@ async function getInputEntity(client, peer) {
         if (typeof peer == "object" &&
             !big_integer_1.default.isInstance(peer) &&
             peer.SUBCLASS_OF_ID === 0x2d45687) {
-            const res = client._entityCache.get(gramjs_1.utils.getPeerId(peer));
+            const res = client._entityCache.get(__1.utils.getPeerId(peer));
             if (res) {
                 return res;
             }
@@ -278,7 +278,7 @@ async function getInputEntity(client, peer) {
     catch (e) { }
     // Only network left to try
     if (typeof peer === "string") {
-        return gramjs_1.utils.getInputPeer(await _getEntityFromString(client, peer));
+        return __1.utils.getInputPeer(await _getEntityFromString(client, peer));
     }
     // If we're a bot and the user has messaged us privately users.getUsers
     // will work with accessHash = 0. Similar for channels.getChannels.
@@ -287,7 +287,7 @@ async function getInputEntity(client, peer) {
     if (typeof peer === "number") {
         peer = (0, Helpers_1.returnBigInt)(peer);
     }
-    peer = gramjs_1.utils.getPeer(peer);
+    peer = __1.utils.getPeer(peer);
     if (peer instanceof tl_1.Api.PeerUser) {
         const users = await client.invoke(new tl_1.Api.users.GetUsers({
             id: [
@@ -305,7 +305,7 @@ async function getInputEntity(client, peer) {
             // We *could* try to guess if it's a channel first, and if
             // it's not, work as a chat and try to validate it through
             // another request, but that becomes too much work.
-            return gramjs_1.utils.getInputPeer(users[0]);
+            return __1.utils.getInputPeer(users[0]);
         }
     }
     else if (peer instanceof tl_1.Api.PeerChat) {
@@ -323,7 +323,7 @@ async function getInputEntity(client, peer) {
                     }),
                 ],
             }));
-            return gramjs_1.utils.getInputPeer(channels.chats[0]);
+            return __1.utils.getInputPeer(channels.chats[0]);
         }
         catch (e) {
             if (client._errorHandler) {
@@ -341,7 +341,7 @@ async function getInputEntity(client, peer) {
 }
 /** @hidden */
 async function _getEntityFromString(client, string) {
-    const phone = gramjs_1.utils.parsePhone(string);
+    const phone = __1.utils.parsePhone(string);
     if (phone) {
         try {
             const result = await client.invoke(new tl_1.Api.contacts.GetContacts({
@@ -363,7 +363,7 @@ async function _getEntityFromString(client, string) {
             throw e;
         }
     }
-    const id = gramjs_1.utils.parseID(string);
+    const id = __1.utils.parseID(string);
     if (id != undefined) {
         return getInputEntity(client, id);
     }
@@ -371,7 +371,7 @@ async function _getEntityFromString(client, string) {
         return client.getMe();
     }
     else {
-        const { username, isInvite } = gramjs_1.utils.parseUsername(string);
+        const { username, isInvite } = __1.utils.parseUsername(string);
         if (isInvite) {
             const invite = await client.invoke(new tl_1.Api.messages.CheckChatInvite({
                 hash: username,
@@ -387,7 +387,7 @@ async function _getEntityFromString(client, string) {
         else if (username) {
             try {
                 const result = await client.invoke(new tl_1.Api.contacts.ResolveUsername({ username: username }));
-                const pid = gramjs_1.utils.getPeerId(result.peer, false);
+                const pid = __1.utils.getPeerId(result.peer, false);
                 if (result.peer instanceof tl_1.Api.PeerUser) {
                     for (const x of result.users) {
                         if ((0, Helpers_1.returnBigInt)(x.id).equals((0, Helpers_1.returnBigInt)(pid))) {
@@ -418,7 +418,7 @@ async function getPeerId(client, peer, addMark = true) {
     if (typeof peer == "string") {
         const valid = (0, Utils_1.parseID)(peer);
         if (valid) {
-            return gramjs_1.utils.getPeerId(peer, addMark);
+            return __1.utils.getPeerId(peer, addMark);
         }
         else {
             peer = await client.getInputEntity(peer);
@@ -427,7 +427,7 @@ async function getPeerId(client, peer, addMark = true) {
     if (typeof peer == "number" ||
         typeof peer == "bigint" ||
         big_integer_1.default.isInstance(peer)) {
-        return gramjs_1.utils.getPeerId(peer, addMark);
+        return __1.utils.getPeerId(peer, addMark);
     }
     if (peer.SUBCLASS_OF_ID == 0x2d45687 || peer.SUBCLASS_OF_ID == 0xc91c90b6) {
         peer = await client.getInputEntity(peer);
@@ -435,14 +435,14 @@ async function getPeerId(client, peer, addMark = true) {
     if (peer instanceof tl_1.Api.InputPeerSelf) {
         peer = await client.getMe(true);
     }
-    return gramjs_1.utils.getPeerId(peer, addMark);
+    return __1.utils.getPeerId(peer, addMark);
 }
 /** @hidden */
 async function _getPeer(client, peer) {
     if (!peer) {
         return undefined;
     }
-    const [i, cls] = gramjs_1.utils.resolveId((0, Helpers_1.returnBigInt)(await client.getPeerId(peer)));
+    const [i, cls] = __1.utils.resolveId((0, Helpers_1.returnBigInt)(await client.getPeerId(peer)));
     return new cls({
         userId: i,
         channelId: i,

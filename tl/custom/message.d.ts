@@ -398,18 +398,18 @@ export declare class CustomMessage extends SenderGetter {
     get toId(): Api.TypePeer;
     getEntitiesText(cls?: Function): any;
     getReplyMessage(): Promise<Api.Message | undefined>;
-    respond(params: SendMessageParams): Promise<any>;
-    reply(params: SendMessageParams): Promise<any>;
+    respond(params: SendMessageParams): Promise<Api.Message | undefined>;
+    reply(params: SendMessageParams): Promise<Api.Message | undefined>;
     forwardTo(entity: EntityLike): Promise<Api.Message[] | undefined>;
     edit(params: Omit<EditMessageParams, "message">): Promise<Api.Message | undefined>;
     delete({ revoke }?: {
         revoke: boolean;
-    }): Promise<any>;
+    }): Promise<Api.messages.AffectedMessages[] | undefined>;
     pin(params?: UpdatePinMessageParams): Promise<Api.Message | undefined>;
     unpin(params?: UpdatePinMessageParams): Promise<undefined>;
     downloadMedia(params?: DownloadMediaInterface): Promise<any>;
     markAsRead(): Promise<boolean | undefined>;
-    click({ i, j, text, filter, data, sharePhone, shareGeo, password, }: ButtonClickParam): Promise<any>;
+    click({ i, j, text, filter, data, sharePhone, shareGeo, password, }: ButtonClickParam): Promise<string | Api.Message | Api.messages.BotCallbackAnswer | Api.TypeUpdates | null | undefined>;
     /**
      * Helper methods to set the buttons given the input sender and chat.
      */

@@ -1,6 +1,6 @@
 import type { EventBuilder } from "../events/common";
 import { Api } from "../tl";
-import type { TelegramClient } from "../gramjs";
+import type { TelegramClient } from "../";
 import { UpdateConnectionState } from "../network";
 /**
  If this exception is raised in any of the handlers for a given event,
@@ -18,7 +18,7 @@ export declare function addEventHandler(client: TelegramClient, callback: Callab
 /** @hidden */
 export declare function removeEventHandler(client: TelegramClient, callback: CallableFunction, event: EventBuilder): void;
 /** @hidden */
-export declare function listEventHandlers(client: TelegramClient): any;
+export declare function listEventHandlers(client: TelegramClient): [EventBuilder, CallableFunction][];
 /** @hidden */
 export declare function catchUp(): void;
 /** @hidden */

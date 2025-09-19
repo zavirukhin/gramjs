@@ -23,10 +23,10 @@ exports._pin = _pin;
 exports.markAsRead = markAsRead;
 exports.getCommentData = getCommentData;
 const tl_1 = require("../tl");
-const requestIter_1 = require("../gramjs/requestIter");
-const Helpers_1 = require("../gramjs/Helpers");
-const Utils_1 = require("../gramjs/Utils");
-const gramjs_1 = require("../gramjs");
+const requestIter_1 = require("../requestIter");
+const Helpers_1 = require("../Helpers");
+const Utils_1 = require("../Utils");
+const __1 = require("../");
 const messageParse_1 = require("./messageParse");
 const users_1 = require("./users");
 const big_integer_1 = __importDefault(require("big-integer"));
@@ -340,13 +340,13 @@ class _IDsIter extends requestIter_1.RequestIter {
         }
         const entities = new Map();
         for (const entity of [...r.users, ...r.chats]) {
-            entities.set(gramjs_1.utils.getPeerId(entity), entity);
+            entities.set(__1.utils.getPeerId(entity), entity);
         }
         let message;
         for (message of r.messages) {
             if (message instanceof tl_1.Api.MessageEmpty ||
                 (fromId &&
-                    gramjs_1.utils.getPeerId(message.peerId) != gramjs_1.utils.getPeerId(fromId))) {
+                    __1.utils.getPeerId(message.peerId) != __1.utils.getPeerId(fromId))) {
                 (_b = this.buffer) === null || _b === void 0 ? void 0 : _b.push(undefined);
             }
             else {
@@ -700,7 +700,7 @@ async function deleteMessages(client, entity, messageIds, { revoke = false }) {
     }
     const results = [];
     if (ty == Helpers_1._EntityType.CHANNEL) {
-        for (const chunk of gramjs_1.utils.chunks(ids)) {
+        for (const chunk of __1.utils.chunks(ids)) {
             results.push(client.invoke(new tl_1.Api.channels.DeleteMessages({
                 channel: entity,
                 id: chunk,
@@ -708,7 +708,7 @@ async function deleteMessages(client, entity, messageIds, { revoke = false }) {
         }
     }
     else {
-        for (const chunk of gramjs_1.utils.chunks(ids)) {
+        for (const chunk of __1.utils.chunks(ids)) {
             results.push(client.invoke(new tl_1.Api.messages.DeleteMessages({
                 id: chunk,
                 revoke: revoke,
@@ -727,7 +727,7 @@ async function unpinMessage(client, entity, message, unpinMessageParams) {
 }
 /** @hidden */
 async function _pin(client, entity, message, unpin, notify = false, pmOneSide = false) {
-    message = gramjs_1.utils.getMessageId(message) || 0;
+    message = __1.utils.getMessageId(message) || 0;
     if (message === 0) {
         return await client.invoke(new tl_1.Api.messages.UnpinAllMessages({
             peer: entity,
@@ -763,10 +763,10 @@ async function markAsRead(client, entity, message, markAsReadParams) {
     if (maxIdIsUndefined) {
         if (message) {
             if (Array.isArray(message)) {
-                maxId = Math.max(...message.map((v) => gramjs_1.utils.getMessageId(v)));
+                maxId = Math.max(...message.map((v) => __1.utils.getMessageId(v)));
             }
             else {
-                maxId = gramjs_1.utils.getMessageId(message);
+                maxId = __1.utils.getMessageId(message);
             }
         }
     }
@@ -789,7 +789,7 @@ async function markAsRead(client, entity, message, markAsReadParams) {
 async function getCommentData(client, entity, message) {
     const result = await client.invoke(new tl_1.Api.messages.GetDiscussionMessage({
         peer: entity,
-        msgId: gramjs_1.utils.getMessageId(message),
+        msgId: __1.utils.getMessageId(message),
     }));
     const relevantMessage = result.messages.reduce((p, c) => (p && p.id < c.id ? p : c));
     let chat;
@@ -801,7 +801,7 @@ async function getCommentData(client, entity, message) {
         }
     }
     return {
-        entity: gramjs_1.utils.getInputPeer(chat),
+        entity: __1.utils.getInputPeer(chat),
         replyTo: relevantMessage.id,
     };
 }

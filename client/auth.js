@@ -42,9 +42,9 @@ exports.signInWithPassword = signInWithPassword;
 exports.signInBot = signInBot;
 exports._authFlow = _authFlow;
 const tl_1 = require("../tl");
-const utils = __importStar(require("../gramjs/Utils"));
-const Helpers_1 = require("../gramjs/Helpers");
-const Password_1 = require("../gramjs/Password");
+const utils = __importStar(require("../Utils"));
+const Helpers_1 = require("../Helpers");
+const Password_1 = require("../Password");
 const QR_CODE_TIMEOUT = 30000;
 // region public methods
 /** @hidden */

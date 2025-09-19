@@ -50,5 +50,5 @@ export declare class MessageButton {
         sharePhone?: boolean | string | Api.InputMediaContact;
         shareGeo?: [number, number] | Api.InputMediaGeoPoint;
         password?: string;
-    }): Promise<any>;
+    }): Promise<string | Api.Message | Api.messages.BotCallbackAnswer | Api.TypeUpdates | null | undefined>;
 }

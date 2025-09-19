@@ -48,14 +48,14 @@ const chatMethods = __importStar(require("./chats"));
 const dialogMethods = __importStar(require("./dialogs"));
 const twoFA = __importStar(require("./2fa"));
 const tl_1 = require("../tl");
-const Utils_1 = require("../gramjs/Utils");
+const Utils_1 = require("../Utils");
 const network_1 = require("../network");
 const AllTLObjects_1 = require("../tl/AllTLObjects");
-const Helpers_1 = require("../gramjs/Helpers");
+const Helpers_1 = require("../Helpers");
 const updates_1 = require("./updates");
 const Logger_1 = require("../extensions/Logger");
-const inspect_1 = require("../gramjs/inspect");
-const platform_1 = require("../gramjs/platform");
+const inspect_1 = require("../inspect");
+const platform_1 = require("../platform");
 /**
  * The TelegramClient uses several methods in different files to provide all the common functionality in a nice interface.</br>
  * **In short, to create a client you must do:**

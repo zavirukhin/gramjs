@@ -1,4 +1,4 @@
-import type { EntityLike } from "../gramjs/define";
+import type { EntityLike } from "../define";
 import { Api } from "../tl";
 import { InlineResults } from "../tl/custom/inlineResults";
 import type { TelegramClient } from "./TelegramClient";

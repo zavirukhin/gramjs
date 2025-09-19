@@ -59,7 +59,7 @@ export declare class CallbackQueryEvent extends EventCommonSender {
     get messageId(): number;
     get data(): any;
     get chatInstance(): any;
-    getMessage(): Promise<Api.Message | undefined>;
+    getMessage(): Promise<Api.Message>;
     _refetchSender(): Promise<void>;
     answer({ message, cacheTime, url, alert, }?: Partial<AnswerCallbackQueryParams>): Promise<boolean | undefined>;
     get viaInline(): boolean;
@@ -68,6 +68,6 @@ export declare class CallbackQueryEvent extends EventCommonSender {
     edit(params: EditMessageParams): Promise<Api.Message>;
     delete({ revoke }?: {
         revoke: boolean;
-    }): Promise<any>;
+    }): Promise<Api.messages.AffectedMessages[] | undefined>;
     get sender(): import("../define").Entity | undefined;
 }

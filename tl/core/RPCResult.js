@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RPCResult = void 0;
 const api_1 = require("../api");
-const _1 = require(".");
+const _1 = require("./");
 class RPCResult {
     constructor(reqMsgId, body, error) {
         this.CONSTRUCTOR_ID = 0xf35c6d01;

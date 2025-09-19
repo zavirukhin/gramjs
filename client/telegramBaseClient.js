@@ -4,21 +4,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TelegramBaseClient = void 0;
-const gramjs_1 = require("../gramjs");
-const Helpers_1 = require("../gramjs/Helpers");
+const __1 = require("../");
+const Helpers_1 = require("../Helpers");
 const connection_1 = require("../network/connection");
 const sessions_1 = require("../sessions");
 const extensions_1 = require("../extensions");
 const tl_1 = require("../tl");
 const os_1 = __importDefault(require("./os"));
-const entityCache_1 = require("../gramjs/entityCache");
+const entityCache_1 = require("../entityCache");
 const markdown_1 = require("../extensions/markdown");
 const network_1 = require("../network");
 const AllTLObjects_1 = require("../tl/AllTLObjects");
 const TCPMTProxy_1 = require("../network/connection/TCPMTProxy");
 const async_mutex_1 = require("async-mutex");
 const Logger_1 = require("../extensions/Logger");
-const platform_1 = require("../gramjs/platform");
+const platform_1 = require("../platform");
 const Deferred_1 = __importDefault(require("../extensions/Deferred"));
 const EXPORTED_SENDER_RECONNECT_TIMEOUT = 1000; // 1 sec
 const EXPORTED_SENDER_RELEASE_TIMEOUT = 30000; // 30 sec
@@ -49,7 +49,7 @@ const clientParamsDefault = {
 class TelegramBaseClient {
     constructor(session, apiId, apiHash, clientParams) {
         /** The current gramJS version. */
-        this.__version__ = gramjs_1.version;
+        this.__version__ = __1.version;
         /** @hidden */
         this._ALBUMS = new Map();
         /** @hidden */
@@ -66,7 +66,7 @@ class TelegramBaseClient {
         else {
             this._log = new extensions_1.Logger();
         }
-        this._log.info("Running gramJS version " + gramjs_1.version);
+        this._log.info("Running gramJS version " + __1.version);
         if (session && typeof session == "string") {
             session = new sessions_1.StoreSession(session);
         }

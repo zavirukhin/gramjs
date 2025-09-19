@@ -1,7 +1,7 @@
 import { Api } from "../tl";
 import type { TelegramClient } from "./TelegramClient";
-import { EntityLike, OutFile, ProgressCallback } from "../gramjs/define";
-import { RequestIter } from "../gramjs/requestIter";
+import { EntityLike, OutFile, ProgressCallback } from "../define";
+import { RequestIter } from "../requestIter";
 import bigInt from "big-integer";
 /**
  * progress callback that will be called each time a new chunk is downloaded.

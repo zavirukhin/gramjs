@@ -7,13 +7,13 @@ exports._ParticipantsIter = void 0;
 exports.iterParticipants = iterParticipants;
 exports.getParticipants = getParticipants;
 exports.kickParticipant = kickParticipant;
-const Helpers_1 = require("../gramjs/Helpers");
-const requestIter_1 = require("../gramjs/requestIter");
-const gramjs_1 = require("../gramjs");
+const Helpers_1 = require("../Helpers");
+const requestIter_1 = require("../requestIter");
+const __1 = require("../");
 const tl_1 = require("../tl");
 const big_integer_1 = __importDefault(require("big-integer"));
-const inspect_1 = require("../gramjs/inspect");
-const Utils_1 = require("../gramjs/Utils");
+const inspect_1 = require("../inspect");
+const Utils_1 = require("../Utils");
 const _MAX_PARTICIPANTS_CHUNK_SIZE = 200;
 const _MAX_ADMIN_LOG_CHUNK_SIZE = 100;
 const _MAX_PROFILE_PHOTO_CHUNK_SIZE = 100;
@@ -109,12 +109,12 @@ class _ParticipantsIter extends requestIter_1.RequestIter {
             }
         }
         entity = await this.client.getInputEntity(entity);
-        const ty = gramjs_1.helpers._entityType(entity);
-        if (search && (filter || ty != gramjs_1.helpers._EntityType.CHANNEL)) {
+        const ty = __1.helpers._entityType(entity);
+        if (search && (filter || ty != __1.helpers._EntityType.CHANNEL)) {
             // We need to 'search' ourselves unless we have a PeerChannel
             search = search.toLowerCase();
             this.filterEntity = (entity) => {
-                return (gramjs_1.utils
+                return (__1.utils
                     .getDisplayName(entity)
                     .toLowerCase()
                     .includes(search) ||
@@ -128,7 +128,7 @@ class _ParticipantsIter extends requestIter_1.RequestIter {
         }
         // Only used for channels, but we should always set the attribute
         this.requests = [];
-        if (ty == gramjs_1.helpers._EntityType.CHANNEL) {
+        if (ty == __1.helpers._EntityType.CHANNEL) {
             if (showTotal) {
                 const channel = await this.client.invoke(new tl_1.Api.channels.GetFullChannel({
                     channel: entity,
@@ -151,7 +151,7 @@ class _ParticipantsIter extends requestIter_1.RequestIter {
                 hash: big_integer_1.default.zero,
             }));
         }
-        else if (ty == gramjs_1.helpers._EntityType.CHAT) {
+        else if (ty == __1.helpers._EntityType.CHAT) {
             if (!("chatId" in entity)) {
                 throw new Error("Found chat without id " + JSON.stringify(entity));
             }
@@ -272,7 +272,7 @@ class _AdminLogIter extends requestIter_1.RequestIter {
         const r = await this.client.invoke(this.request);
         const entities = new Map();
         for (const entity of [...r.users, ...r.chats]) {
-            entities.set(gramjs_1.utils.getPeerId(entity), entity);
+            entities.set(__1.utils.getPeerId(entity), entity);
         }
         const eventIds = [];
         for (const e of r.events) {
@@ -310,15 +310,15 @@ async function kickParticipant(client, entity, participant) {
     const user = await client.getInputEntity(participant);
     let resp;
     let request;
-    const type = gramjs_1.helpers._entityType(peer);
-    if (type === gramjs_1.helpers._EntityType.CHAT) {
+    const type = __1.helpers._entityType(peer);
+    if (type === __1.helpers._EntityType.CHAT) {
         request = new tl_1.Api.messages.DeleteChatUser({
             chatId: (0, Helpers_1.returnBigInt)((0, Utils_1.getPeerId)(entity)),
             userId: (0, Helpers_1.returnBigInt)((0, Utils_1.getPeerId)(participant)),
         });
         resp = await client.invoke(request);
     }
-    else if (type === gramjs_1.helpers._EntityType.CHANNEL) {
+    else if (type === __1.helpers._EntityType.CHANNEL) {
         if (user instanceof tl_1.Api.InputPeerSelf) {
             request = new tl_1.Api.channels.LeaveChannel({
                 channel: peer,

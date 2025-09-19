@@ -1,6 +1,6 @@
 import { Api } from "../tl";
 import { TelegramClient } from "./TelegramClient";
-import { EntityLike, FileLike, MarkupLike, MessageIDLike } from "../gramjs/define";
+import { EntityLike, FileLike, MarkupLike, MessageIDLike } from "../define";
 interface OnProgress {
     (progress: number): void;
     isCanceled?: boolean;

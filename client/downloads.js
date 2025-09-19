@@ -54,10 +54,10 @@ exports._downloadCachedPhotoSize = _downloadCachedPhotoSize;
 exports._downloadPhoto = _downloadPhoto;
 exports.downloadProfilePhoto = downloadProfilePhoto;
 const tl_1 = require("../tl");
-const Utils_1 = require("../gramjs/Utils");
-const Helpers_1 = require("../gramjs/Helpers");
-const gramjs_1 = require("../gramjs");
-const requestIter_1 = require("../gramjs/requestIter");
+const Utils_1 = require("../Utils");
+const Helpers_1 = require("../Helpers");
+const __1 = require("../");
+const requestIter_1 = require("../requestIter");
 const errors_1 = require("../errors");
 const fs_1 = require("./fs");
 const extensions_1 = require("../extensions");
@@ -196,7 +196,7 @@ exports.GenericDownloadIter = GenericDownloadIter;
 function iterDownload(client, { file, offset = big_integer_1.default.zero, stride, limit, chunkSize, requestSize = MAX_CHUNK_SIZE, fileSize, dcId, msgData, }) {
     // we're ignoring here to make it more flexible (which is probably a bad idea)
     // @ts-ignore
-    const info = gramjs_1.utils.getFileInfo(file);
+    const info = __1.utils.getFileInfo(file);
     if (info.dcId != undefined) {
         dcId = info.dcId;
     }
@@ -284,7 +284,7 @@ async function downloadFileV2(client, inputLocation, { outputFile = undefined, p
             partSizeKb = 64;
         }
         else {
-            partSizeKb = gramjs_1.utils.getAppropriatedPartSize(fileSize);
+            partSizeKb = __1.utils.getAppropriatedPartSize(fileSize);
         }
     }
     const partSize = Math.floor(partSizeKb * 1024);
@@ -414,7 +414,7 @@ async function _downloadDocument(client, doc, outputFile, date, thumb, progressC
     }
     let size;
     if (thumb == undefined) {
-        outputFile = getProperFilename(outputFile, "document", "." + (gramjs_1.utils.getExtension(doc) || "bin"), date);
+        outputFile = getProperFilename(outputFile, "document", "." + (__1.utils.getExtension(doc) || "bin"), date);
     }
     else {
         outputFile = getProperFilename(outputFile, "photo", ".jpg", date);
@@ -599,7 +599,7 @@ async function downloadProfilePhoto(client, entity, fileParams) {
         photo instanceof tl_1.Api.ChatPhoto) {
         dcId = photo.dcId;
         loc = new tl_1.Api.InputPeerPhotoFileLocation({
-            peer: gramjs_1.utils.getInputPeer(entity),
+            peer: __1.utils.getInputPeer(entity),
             photoId: photo.photoId,
             big: fileParams.isBig,
         });

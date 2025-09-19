@@ -1,8 +1,9 @@
 import type { TelegramClient } from "./TelegramClient";
-import type { EntityLike } from "../gramjs/define";
-import { RequestIter } from "../gramjs/requestIter";
+import type { EntityLike } from "../define";
+import { TotalList } from "../Helpers";
+import { RequestIter } from "../requestIter";
 import { Api } from "../tl";
-import { inspect } from "../gramjs/inspect";
+import { inspect } from "../inspect";
 interface ParticipantsIterInterface {
     entity: EntityLike;
     filter: any;
@@ -11,7 +12,9 @@ interface ParticipantsIterInterface {
     showTotal?: boolean;
 }
 export declare class _ParticipantsIter extends RequestIter {
-    [inspect.custom]: () => any;
+    [inspect.custom]: () => {
+        [key: string]: any;
+    };
     private filterEntity;
     private requests?;
     _init({ entity, filter, offset, search, showTotal, }: ParticipantsIterInterface): Promise<boolean | void>;

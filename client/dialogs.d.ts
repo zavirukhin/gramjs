@@ -1,9 +1,9 @@
 import { Api } from "../tl";
-import { RequestIter } from "../gramjs/requestIter";
-import { TelegramClient } from "../gramjs/index";
+import { RequestIter } from "../requestIter";
+import { TelegramClient } from "../index";
 import { Dialog } from "../tl/custom/dialog";
-import { DateLike, EntityLike } from "../gramjs/define";
-import { TotalList } from "../gramjs/Helpers";
+import { DateLike, EntityLike } from "../define";
+import { TotalList } from "../Helpers";
 export interface DialogsIterInterface {
     offsetDate: number;
     offsetId: number;

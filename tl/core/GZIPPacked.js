@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GZIPPacked = void 0;
-const __1 = require("..");
+const __1 = require("../");
 const pako_1 = require("pako");
 class GZIPPacked {
     constructor(data) {

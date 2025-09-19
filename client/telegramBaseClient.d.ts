@@ -1,9 +1,9 @@
-import { Connection } from "../gramjs";
+import { Connection } from "../";
 import { Session } from "../sessions";
 import { Logger, PromisedNetSockets, PromisedWebSockets } from "../extensions";
 import { Api } from "../tl";
 import type { AuthKey } from "../crypto/AuthKey";
-import { EntityCache } from "../gramjs/entityCache";
+import { EntityCache } from "../entityCache";
 import type { ParseInterface } from "./messageParse";
 import type { EventBuilder } from "../events/common";
 import { MTProtoSender } from "../network";
@@ -113,7 +113,7 @@ export interface TelegramClientParams {
 }
 export declare abstract class TelegramBaseClient {
     /** The current gramJS version. */
-    __version__: any;
+    __version__: string;
     /** @hidden */
     _config?: Api.Config;
     /** @hidden */

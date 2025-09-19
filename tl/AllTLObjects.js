@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.tlobjects = exports.LAYER = void 0;
 exports.LAYER = 193;
-const _1 = require(".");
+const _1 = require("./");
 const tlobjects = {};
 exports.tlobjects = tlobjects;
 for (const tl of Object.values(_1.Api)) {

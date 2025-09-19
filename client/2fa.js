@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateTwoFaSettings = updateTwoFaSettings;
-const Helpers_1 = require("../gramjs/Helpers");
-const Password_1 = require("../gramjs/Password");
+const Helpers_1 = require("../Helpers");
+const Password_1 = require("../Password");
 const tl_1 = require("../tl");
-const index_1 = require("../gramjs/index");
+const index_1 = require("../index");
 /**
  * Changes the 2FA settings of the logged in user.
  Note that this method may be *incredibly* slow depending on the

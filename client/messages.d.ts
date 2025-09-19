@@ -1,8 +1,8 @@
 import { Api } from "../tl";
-import type { DateLike, EntityLike, FileLike, MarkupLike, MessageIDLike, MessageLike } from "../gramjs/define";
-import { RequestIter } from "../gramjs/requestIter";
-import { TotalList } from "../gramjs/Helpers";
-import type { TelegramClient } from "../gramjs";
+import type { DateLike, EntityLike, FileLike, MarkupLike, MessageIDLike, MessageLike } from "../define";
+import { RequestIter } from "../requestIter";
+import { TotalList } from "../Helpers";
+import type { TelegramClient } from "../";
 interface MessageIterParams {
     entity: EntityLike;
     offsetId: number;
@@ -234,7 +234,7 @@ entity: EntityLike,
 /**  The message to be sent, or another message object to resend as a copy.<br/>
  * The maximum length for a message is 35,000 bytes or 4,096 characters.<br/>
  * Longer messages will not be sliced automatically, and you should slice them manually if the text to send is longer than said length. */
-{ message, replyTo, attributes, parseMode, formattingEntities, linkPreview, file, thumb, forceDocument, clearDraft, buttons, silent, supportStreaming, schedule, noforwards, commentTo, topMsgId, }?: SendMessageParams): Promise<any>;
+{ message, replyTo, attributes, parseMode, formattingEntities, linkPreview, file, thumb, forceDocument, clearDraft, buttons, silent, supportStreaming, schedule, noforwards, commentTo, topMsgId, }?: SendMessageParams): Promise<Api.Message>;
 /** @hidden */
 export declare function forwardMessages(client: TelegramClient, entity: EntityLike, { messages, fromPeer, silent, schedule, noforwards, dropAuthor, }: ForwardMessagesParams): Promise<Api.Message[]>;
 /** @hidden */
@@ -242,18 +242,18 @@ export declare function editMessage(client: TelegramClient, entity: EntityLike, 
 /** @hidden */
 export declare function deleteMessages(client: TelegramClient, entity: EntityLike | undefined, messageIds: MessageIDLike[], { revoke }: {
     revoke?: boolean | undefined;
-}): Promise<any>;
+}): Promise<Api.messages.AffectedMessages[]>;
 /** @hidden */
-export declare function pinMessage(client: TelegramClient, entity: EntityLike, message?: MessageIDLike, pinMessageParams?: UpdatePinMessageParams): Promise<any>;
+export declare function pinMessage(client: TelegramClient, entity: EntityLike, message?: MessageIDLike, pinMessageParams?: UpdatePinMessageParams): Promise<Api.Message | Api.messages.AffectedHistory | undefined>;
 /** @hidden */
-export declare function unpinMessage(client: TelegramClient, entity: EntityLike, message?: MessageIDLike, unpinMessageParams?: UpdatePinMessageParams): Promise<any>;
+export declare function unpinMessage(client: TelegramClient, entity: EntityLike, message?: MessageIDLike, unpinMessageParams?: UpdatePinMessageParams): Promise<Api.Message | Api.messages.AffectedHistory | undefined>;
 /** @hidden */
-export declare function _pin(client: TelegramClient, entity: EntityLike, message: MessageIDLike | undefined, unpin: boolean, notify?: boolean, pmOneSide?: boolean): Promise<any>;
+export declare function _pin(client: TelegramClient, entity: EntityLike, message: MessageIDLike | undefined, unpin: boolean, notify?: boolean, pmOneSide?: boolean): Promise<Api.Message | Api.messages.AffectedHistory | undefined>;
 /** @hidden */
 export declare function markAsRead(client: TelegramClient, entity: EntityLike, message?: MessageIDLike | MessageIDLike[], markAsReadParams?: MarkAsReadParams): Promise<boolean>;
 /** @hidden */
 export declare function getCommentData(client: TelegramClient, entity: EntityLike, message: number | Api.Message): Promise<{
-    entity: any;
-    replyTo: any;
+    entity: Api.TypeInputPeer;
+    replyTo: number;
 }>;
 export {};
